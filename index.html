@@ -57,6 +57,7 @@ body{
   font-size:48px;
   cursor:pointer;
   user-select:none;
+  touch-action: manipulation;
 }
 
 /* Ending overlay */
@@ -203,7 +204,7 @@ function startHearts(){
 
 function startSparkles(){
   const sparkleInterval = setInterval(()=>{
-    if(popped === TOTAL_BALLOONS) { clearInterval(sparkleInterval); return; } // stop after all balloons
+    if(popped === TOTAL_BALLOONS) { clearInterval(sparkleInterval); return; }
     const s = document.createElement("div");
     s.className = "sparkle";
     s.innerText = "✨";
@@ -216,7 +217,6 @@ function startSparkles(){
 }
 
 function endGift(){
-  // Hide the message card so overlay is perfectly centered
   const card = document.querySelector(".card");
   if(card) card.style.display = "none";
 
@@ -245,7 +245,8 @@ function spawnObject(){
     el.innerText = "🎈";
   } else return;
 
-  el.onclick = () => {
+  // Mobile + PC support
+  el.onclick = el.ontouchstart = () => {
     if(gameOver) return;
 
     if(isBomb){
@@ -274,7 +275,6 @@ function spawnObject(){
   document.body.appendChild(el);
 }
 
-/* Start balloons and sparkles */
 setInterval(spawnObject,2300);
 startSparkles();
 updateCounter();
